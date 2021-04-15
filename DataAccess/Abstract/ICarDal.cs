@@ -5,14 +5,10 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface ICarDal
+    public interface ICarDal : IEntityRepository<Car>
     {
-        void Add(Car car);
-        void Delete(Car car);
-        void Update(Car car);
-        Car GetByID(Car car);
-        List<Car> GetAll();
-
+        List<Car> GetCarsByColorId(int colorid);
+        List<Car> GetCarsByBrandId(int brandid);
 
     }
 }

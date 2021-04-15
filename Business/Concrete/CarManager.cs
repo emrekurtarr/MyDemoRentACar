@@ -22,7 +22,17 @@ namespace Business.Concrete
             //İş parçacığı kodları
             //If-else durumları burada yazılır
 
-            _carDal.Add(car);
+            if( car.Description.Length >= 2 && car.DailyPrice > 0)
+            {
+                _carDal.Add(car);
+            }
+            else
+            {
+                Console.WriteLine("Araba fiyatı 0'dan büyük ve modeli min 2 karakter uzunluğunda olmalıdır");
+            }
+
+            
+            
         }
 
         public void Delete(Car car)
@@ -38,9 +48,19 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public Car GetByID(Car car)
+        public Car GetByID(int id)
         {
-            return _carDal.GetByID(car);
+            return _carDal.GetByID(id);
+        }
+
+        public List<Car> GetCarsByBrandId(int brandid)
+        {
+            return _carDal.GetCarsByBrandId(brandid);
+        }
+
+        public List<Car> GetCarsByColorId(int colorid)
+        {
+            return _carDal.GetCarsByColorId(colorid);
         }
 
         public void Update(Car car)

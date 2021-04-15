@@ -15,11 +15,11 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car{ID=1,BrandID=1,ColorID=1,DailyPrice=1000,Description="Test Arabası1",ModelYear=1995},
-                new Car{ID=2,BrandID=1,ColorID=3,DailyPrice=500,Description="Test Arabası2",ModelYear=2000},
-                new Car{ID=3,BrandID=2,ColorID=4,DailyPrice=800,Description="Test Arabası3",ModelYear=1990},
-                new Car{ID=4,BrandID=2,ColorID=2,DailyPrice=750,Description="Test Arabası4",ModelYear=2010},
-                new Car{ID=5,BrandID=3,ColorID=5,DailyPrice=300,Description="Test Arabası5",ModelYear=2013},
+                new Car{ID=1,BrandId=1,ColorId=1,DailyPrice=1000,Description="Test Arabası1",ModelYear=1995},
+                new Car{ID=2,BrandId=1,ColorId=3,DailyPrice=500,Description="Test Arabası2",ModelYear=2000},
+                new Car{ID=3,BrandId=2,ColorId=4,DailyPrice=800,Description="Test Arabası3",ModelYear=1990},
+                new Car{ID=4,BrandId=2,ColorId=2,DailyPrice=750,Description="Test Arabası4",ModelYear=2010},
+                new Car{ID=5,BrandId=3,ColorId=5,DailyPrice=300,Description="Test Arabası5",ModelYear=2013},
 
             };
         }
@@ -71,8 +71,8 @@ namespace DataAccess.Concrete.InMemory
 
             Car UpdatedToCar = _cars.Where(c => c.ID == car.ID).SingleOrDefault();
 
-            UpdatedToCar.BrandID = car.BrandID;
-            UpdatedToCar.ColorID = car.ColorID;
+            UpdatedToCar.BrandId = car.BrandId;
+            UpdatedToCar.ColorId = car.ColorId;
             UpdatedToCar.DailyPrice = car.DailyPrice;
             UpdatedToCar.Description = car.Description;
             UpdatedToCar.ModelYear = car.ModelYear;
@@ -84,11 +84,19 @@ namespace DataAccess.Concrete.InMemory
             return _cars;
         }
 
-        public Car GetByID(Car car)
+        public Car GetByID(int id)
         {
-            return _cars.Where(c => c.ID == car.ID).SingleOrDefault();
+            return _cars.Where(c => c.ID == id).SingleOrDefault();
         }
 
+        public List<Car> GetCarsByColorId(int colorid)
+        {
+            throw new NotImplementedException();
+        }
 
+        public List<Car> GetCarsByBrandId(int brandid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
