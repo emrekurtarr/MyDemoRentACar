@@ -1,62 +1,22 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Context;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EFCarDal : ICarDal
+    public class EFCarDal : EfEntityRepositoryBase<Car, MyDbContext>, ICarDal
     {
-
-        
-        public void Add(Car entity)
-        {
-            using (MyDbContext myDbContext = new MyDbContext())
-            {
-                myDbContext.Add(entity);
-                myDbContext.SaveChanges();
-            }
-        }
-
-
-
-        public void Delete(Car entity)
-        {
-            using (MyDbContext myDbContext = new MyDbContext())
-            {
-                Car deletedCar = myDbContext.Cars.FirstOrDefault(c => c.ID == entity.ID);
-
-                if(deletedCar != null)
-                {
-                    myDbContext.Remove(deletedCar);
-                    myDbContext.SaveChanges();
-                }
-            }
-        }
-
-        public List<Car> GetAll()
-        {
-            using (MyDbContext myDbContext = new MyDbContext())
-            {
-                return myDbContext.Cars.ToList();
-            }
-        }
-
-        public Car GetByID(int id)
-        {
-            using (MyDbContext myDbContext = new MyDbContext())
-            {
-                Car car = myDbContext.Cars.FirstOrDefault(c => c.ID == id);
-                return car;
-            }
-        }
 
         public List<Car> GetCarsByBrandId(int brandid)
         {
-            using(MyDbContext myDbContext = new MyDbContext())
+            using (MyDbContext myDbContext = new MyDbContext())
             {
                 return myDbContext.Cars.Where(c => c.BrandId == brandid).ToList();
             }
@@ -70,18 +30,21 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public void Update(Car entity)
+        public List<CarDetails> GetCarsDetails()
         {
             using (MyDbContext myDbContext = new MyDbContext())
             {
-                Car updatedCar = myDbContext.Cars.FirstOrDefault(c => c.ID == entity.ID);
+                var result = from car in myDbContext.Cars
+                             join b in myDbContext.Brands on car.BrandId equals b.BrandId
+                             join color in myDbContext.Colors on car.ColorId equals color.ColorId
+                             select new CarDetails {
+                                 CarName = car.Description, BrandName = b.Name, ColorName = color.Name, DailyPrice = car.DailyPrice 
+                             };
 
-                if(updatedCar != null)
-                {
-                    updatedCar = entity;
-                    myDbContext.SaveChanges();
-                }
+                return result.ToList();
+                             
             }
         }
+
     }
 }

@@ -2,8 +2,10 @@
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Concrete
@@ -43,14 +45,14 @@ namespace Business.Concrete
             _carDal.Delete(car);
         }
 
-        public List<Car> GetAll()
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
-            return _carDal.GetAll();
+            return _carDal.GetAll(filter);
         }
 
-        public Car GetByID(int id)
+        public Car Get(Expression<Func<Car, bool>> filter)
         {
-            return _carDal.GetByID(id);
+            return _carDal.Get(filter);
         }
 
         public List<Car> GetCarsByBrandId(int brandid)
@@ -69,6 +71,11 @@ namespace Business.Concrete
             //If-else durumları burada yazılır
 
             _carDal.Update(car);
+        }
+
+        public List<CarDetails> GetCarsDetails()
+        {
+            return _carDal.GetCarsDetails();
         }
     }
 }

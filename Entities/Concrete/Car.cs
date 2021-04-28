@@ -1,4 +1,4 @@
-﻿using Entities.Abstract;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,8 +17,6 @@ namespace Entities.Concrete
         public decimal DailyPrice { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey("BrandId")]
-        public virtual Brand Brand { get; set; }
-        public virtual Color Color { get; set; }
+        
     }
 }

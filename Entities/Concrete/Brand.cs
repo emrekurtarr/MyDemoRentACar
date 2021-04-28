@@ -1,4 +1,4 @@
-﻿using Entities.Abstract;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,17 +9,9 @@ namespace Entities.Concrete
 {
     public class Brand : IEntity
     {
-
-        public Brand()
-        {
-            Cars = new List<Car>();
-        }
-
-
         [Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BrandId { get; set; }
         public string Name { get; set; }
 
-        public virtual List<Car> Cars { get; set; }
     }
 }
