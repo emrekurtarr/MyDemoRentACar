@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -17,29 +18,34 @@ namespace Business.Concrete
             _colorDAL = colorDAL;
         }
 
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
             _colorDAL.Add(color);
+            return new SuccessResult(color.Name + " başarıyla eklendi.");
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
             _colorDAL.Delete(color);
+            return new SuccessResult(color.Name + " başarıyla silindi.");
         }
 
-        public List<Color> GetAll(Expression<Func<Color, bool>> filter = null)
-        {
-            return _colorDAL.GetAll(filter);
-        }
-
-        public Color Get(Expression<Func<Color, bool>> filter)
-        {
-            return _colorDAL.Get(filter);
-        }
-
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
             _colorDAL.Update(color);
+            return new SuccessResult(color.Name + " başarıyla güncellendi.");
         }
+
+        public IDataResult<List<Color>> GetAll(Expression<Func<Color, bool>> filter = null)
+        {
+            return new SuccessDataResult<List<Color>>(_colorDAL.GetAll(filter));
+        }
+
+        public IDataResult<Color> Get(Expression<Func<Color, bool>> filter)
+        {
+            return new SuccessDataResult<Color>(_colorDAL.Get(filter));
+        }
+
+        
     }
 }

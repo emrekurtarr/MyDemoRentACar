@@ -165,10 +165,27 @@ namespace ConsoleUI
             //}
             //#endregion
 
-            foreach (var item in carManager.GetCarsDetails())
+            foreach (var item in carManager.GetCarsDetails().Data)
             {
-                Console.WriteLine(item.CarName + " - " + item.BrandName + " - " + item.ColorName + " - " + item.DailyPrice );
+                Console.WriteLine(item.CarName + " - " + item.BrandName + " - " + item.ColorName + " - " + item.DailyPrice);
             }
+
+            AddingErroneousCar(carManager);
+
+        }
+
+        private static void AddingErroneousCar(CarManager carManager)
+        {
+            Car car4 = new Car { ModelYear = 2021, DailyPrice = 35000, Description = "Z", BrandId = 2069, ColorId = 2137 };
+
+            var result = carManager.Add(car4);
+
+            if (result.Success)
+            {
+                Console.WriteLine(result.Message);
+            }
+
+            Console.WriteLine(result.Message);
         }
     }
 }
